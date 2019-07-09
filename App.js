@@ -7,29 +7,32 @@ import {
     TextInput
 } from 'react-native';
 
-const items = [];
 
 import MyButton from './button'
 import { Platform } from '@unimodules/core';
 
 
-export default class App extends Component<{}> {
-
+export default class App extends Component {
+  
   constructor(props){
     super(props);
-
+    
     this.addItem = this.addItem.bind(this)
   }
-
+  
   state = {
     toDo : '',
+    items: []
   }
   
   
   addItem(){
-    items.push(this.state.toDo)
 
-    this.setState({toDo : ''})
+
+    this.setState({
+      toDo : '',
+      items: [...this.state.items, this.state.toDo],
+    })
   }
 
   renderItem(item) {
@@ -56,8 +59,9 @@ export default class App extends Component<{}> {
         <View style={{height:0.8, backgroundColor: 'gray', margin:10}}>
         </View>
         <ScrollView>
+          <Text>{this.state.items.length}</Text>
           {
-            items.map((item) => this.renderItem(item))
+            this.state.items.map((item) => this.renderItem(item))
           }
         </ScrollView>
       </View>
